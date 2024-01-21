@@ -1,4 +1,4 @@
-package com.example.cloudservice;
+package com.example.cloudservice.schemas;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

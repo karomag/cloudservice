@@ -1,6 +1,6 @@
 package com.example.cloudservice.controller;
 
-import com.example.cloudservice.Login;
+import com.example.cloudservice.schemas.Login;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
