@@ -1,9 +1,9 @@
 package com.example.cloudservice.controller;
 
+import com.example.cloudservice.schemas.StorageException;
 import com.example.cloudservice.service.StorageService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +20,12 @@ public class FileController {
     private final StorageService storageService;
 
     @PostMapping()
-    public ResponseEntity<?> fileUpload(@RequestParam("file") MultipartFile file) {
-        storageService.store(file);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> fileUpload(@RequestParam("file") MultipartFile file) {
+        try {
+            storageService.store(file);
+        } catch (StorageException e) {
+            return ResponseEntity.badRequest().body("Error input data");
+        }
+        return ResponseEntity.ok().body("Success upload");
     }
 }

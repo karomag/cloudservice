@@ -1,10 +1,9 @@
 package com.example.cloudservice.service;
 
+import com.example.cloudservice.entity.FileEntity;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Path;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.util.List;
 
 public interface StorageService {
 
@@ -12,7 +11,8 @@ public interface StorageService {
 
     void store(MultipartFile file);
 
+    List<FileEntity> loadFiles(int limit);
+
     void deleteAll();
 
-    Map<String, Integer> loadAll();
 }
