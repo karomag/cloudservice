@@ -1,5 +1,5 @@
 <template>
-    <main class="login">
+    <main class="loginDto">
         <h1 class="login__title">
             Облачное хранилище
         </h1>
@@ -94,7 +94,7 @@
             const submitForm = () => {
                 if (!validateForm()) return;
 
-                store.dispatch('login', {
+                store.dispatch('loginDto', {
                     email: form.email,
                     password: form.password
                 }).then(res => {
@@ -134,7 +134,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .login {
+    .loginDto {
         display: flex;
         flex-direction: column;
         justify-content: center;

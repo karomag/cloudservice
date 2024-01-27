@@ -1,4 +1,4 @@
-package com.example.cloudservice.schemas;
+package com.example.cloudservice.exception;
 
 
 public class StorageException extends RuntimeException {
