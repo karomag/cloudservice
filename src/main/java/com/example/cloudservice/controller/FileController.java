@@ -1,23 +1,18 @@
 package com.example.cloudservice.controller;
 
-import com.example.cloudservice.dto.ErrorDto;
-import com.example.cloudservice.entity.FileEntity;
-import com.example.cloudservice.exception.StorageException;
+import com.example.cloudservice.entity.FileData;
 import com.example.cloudservice.service.StorageService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.springframework.core.io.ByteArrayResource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
-@Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/file")
 public class FileController {
@@ -25,57 +20,30 @@ public class FileController {
     private final StorageService storageService;
 
     @PostMapping
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
-        try {
-            if (file.isEmpty()) {
-                return ResponseEntity
-                        .status(HttpStatus.BAD_REQUEST)
-                        .body(new ErrorDto("Error input data"));
-            }
-            storageService.store(file);
-        } catch (IOException e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorDto("Error delet file"));
-        }
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+        storageService.storeFile(file);
         return ResponseEntity.ok().body("Success upload");
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteFile(@RequestParam("filename") String filename) {
-        if (filename.isEmpty()) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorDto("Error input data"));
-        }
-        try {
-            storageService.deleteFile(filename);
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorDto("Error delet file"));
-        }
+    public ResponseEntity<String> deleteFile(@RequestParam("filename") String filename) {
+        storageService.deleteFile(filename);
         return ResponseEntity.ok().body("Success deleted");
     }
 
     @GetMapping
-    public ResponseEntity<?> downloadFile(@RequestParam("filename") String filename) {
-        if (filename.isEmpty()) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorDto("Error input data"));
-        }
-        FileEntity fileEntity;
-        try {
-           fileEntity = storageService.downloadFile(filename);
-        } catch (StorageException e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorDto("Error upload file"));
-        }
+    public ResponseEntity<byte[]> downloadFile(@RequestParam("filename") String filename) throws FileNotFoundException {
+        FileData file = storageService.downloadFile(filename);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileEntity.getFilename())
-                .body(fileEntity.getFile());
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getFilename())
+                .body(file.getFile());
+    }
+
+    @PutMapping
+    public ResponseEntity<String> updateFile(@RequestParam("filename") String filename,
+                                             @RequestBody() FileData newFileData) throws FileNotFoundException {
+        storageService.updateFile(filename, newFileData);
+        return ResponseEntity.ok().body("Success upload");
     }
 }

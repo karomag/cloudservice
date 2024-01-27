@@ -1,26 +1,22 @@
 package com.example.cloudservice.controller;
 
 import com.example.cloudservice.dto.LoginDto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.example.cloudservice.service.LoginService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-
-@Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/login")
 public class LoginController {
 
+    private final LoginService loginService;
+
     @PostMapping
-    public ResponseEntity<LoginDto> logIn() {
-        LoginDto loginDto = new LoginDto("123");
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(loginDto);
+    public ResponseEntity<LoginDto> logIn(@RequestBody LoginDto loginData) {
+        var loginDto = loginService.logIn(loginData.getLogin(), loginData.getPassword());
+        return ResponseEntity.status(HttpStatus.OK).body(loginDto);
     }
 }

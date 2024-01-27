@@ -1,12 +1,18 @@
 package com.example.cloudservice.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "files")
-public class FileEntity {
+public class FileData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
