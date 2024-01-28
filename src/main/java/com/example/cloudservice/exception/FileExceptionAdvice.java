@@ -9,27 +9,27 @@ import org.springframework.validation.method.MethodValidationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @RestControllerAdvice
 public class FileExceptionAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ErrorDto> handleInternalServerException(RuntimeException exc) {
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ErrorDto(exc.getMessage()));
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorDto handleInternalServerException(RuntimeException exc) {
+        return new ErrorDto(exc.getMessage());
     }
 
-    @ExceptionHandler(IOException.class)
-    public ResponseEntity<ErrorDto> handleInternalServerException(IOException exc) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorDto(exc.getMessage()));
+    @ExceptionHandler({IOException.class, FileNotFoundException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto handleIOException(IOException exc) {
+        return new ErrorDto(exc.getMessage());
     }
 
     @Override
@@ -39,7 +39,7 @@ public class FileExceptionAdvice extends ResponseEntityExceptionHandler {
                                                                   WebRequest request) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorDto("Error input data. MethodArgumentNotValid"));
+                .body(new ErrorDto("Error input data."));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class FileExceptionAdvice extends ResponseEntityExceptionHandler {
                                                                           WebRequest request) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorDto("Error input data. MissingServletRequestParameter"));
+                .body(new ErrorDto("Error input data."));
     }
 
     @Override
@@ -59,6 +59,6 @@ public class FileExceptionAdvice extends ResponseEntityExceptionHandler {
                                                                      WebRequest request) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorDto("Error input data. MethodValidationException"));
+                .body(new ErrorDto("Error input data."));
     }
 }

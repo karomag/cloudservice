@@ -20,7 +20,7 @@ public class ListController {
     private final StorageService storageService;
 
     @GetMapping()
-    public ResponseEntity<?> getAllFiles(@RequestParam int limit) {
+    public ResponseEntity<List<FileData>> getAllFiles(@RequestParam int limit) {
         List<FileData> files = storageService.loadFiles(limit);
         return ResponseEntity
                 .status(HttpStatus.OK)
