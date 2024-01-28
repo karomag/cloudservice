@@ -17,6 +17,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class FileControllerTest {
@@ -40,6 +41,8 @@ class FileControllerTest {
         // then
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        verify(this.storageService).storeFile(multipartFile);
     }
 
     @Test
@@ -51,6 +54,8 @@ class FileControllerTest {
         // then
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        verify(this.storageService).deleteFile(filename);
     }
 
     @Test
@@ -84,5 +89,7 @@ class FileControllerTest {
         // then
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        verify(this.storageService).updateFile(filename, fileData);
     }
 }
