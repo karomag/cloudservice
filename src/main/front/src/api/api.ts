@@ -1,4 +1,4 @@
-import httpClient from "@/api/httpClient";
+import httpClient from "./httpClient";
 
 /**
  * Вход
