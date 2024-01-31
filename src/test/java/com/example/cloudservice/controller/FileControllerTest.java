@@ -2,6 +2,7 @@ package com.example.cloudservice.controller;
 
 import com.example.cloudservice.entity.FileData;
 import com.example.cloudservice.service.StorageService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,13 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class FileControllerTest {
@@ -29,7 +25,8 @@ class FileControllerTest {
     private FileController fileController;
 
     @Test
-    void uploadFile_SuccessUpload() throws IOException {
+    @SneakyThrows
+    void uploadFile_SuccessUpload() {
         // given
         MockMultipartFile multipartFile = new MockMultipartFile(
                 "file",
@@ -59,7 +56,8 @@ class FileControllerTest {
     }
 
     @Test
-    void downloadFile_SuccessDownload() throws FileNotFoundException {
+    @SneakyThrows
+    void downloadFile_SuccessDownload() {
         // given
         byte[] file = "Spring Framework".getBytes();
         String filename = "test.txt";
@@ -79,7 +77,8 @@ class FileControllerTest {
     }
 
     @Test
-    void updateFile_SuccessUpdate() throws FileNotFoundException {
+    @SneakyThrows
+    void updateFile_SuccessUpdate() {
         // given
         String filename = "test.txt";
         FileData fileData = FileData.builder()

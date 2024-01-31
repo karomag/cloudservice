@@ -6,13 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "files")
-public class FileData {
+public class FileData implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
