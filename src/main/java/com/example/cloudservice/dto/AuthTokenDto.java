@@ -6,9 +6,8 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class LoginDto {
+public class AuthTokenDto {
     @JsonProperty("auth-token")
     private final String authToken;
-    private final String login;
-    private final String password;
+    private final String email;
 }

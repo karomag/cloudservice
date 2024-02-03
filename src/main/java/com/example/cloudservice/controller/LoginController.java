@@ -1,7 +1,7 @@
 package com.example.cloudservice.controller;
 
-import com.example.cloudservice.dto.LoginDto;
-import com.example.cloudservice.service.LoginService;
+import com.example.cloudservice.dto.AuthTokenDto;
+import com.example.cloudservice.service.AuthTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/login")
 public class LoginController {
 
-    private final LoginService loginService;
+    private final AuthTokenService authTokenService;
 
     @PostMapping
-    public ResponseEntity<LoginDto> logIn(@RequestBody LoginDto loginData) {
-        var loginDto = loginService.logIn(loginData.getLogin(), loginData.getPassword());
-        return ResponseEntity.status(HttpStatus.OK).body(loginDto);
+    public ResponseEntity<AuthTokenDto> logIn() {
+        AuthTokenDto authTokenDto = authTokenService.generateToken();
+        return ResponseEntity.status(HttpStatus.OK).body(authTokenDto);
     }
+
 }
