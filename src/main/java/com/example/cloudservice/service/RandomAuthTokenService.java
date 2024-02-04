@@ -13,6 +13,6 @@ public class RandomAuthTokenService implements AuthTokenService {
     @Override
     public AuthTokenDto generateToken() {
         UUID uuid = UUID.randomUUID();
-        return new AuthTokenDto(uuid.toString(), "email");
+        return new AuthTokenDto(uuid.toString());
     }
 }

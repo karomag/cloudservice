@@ -9,5 +9,4 @@ import lombok.RequiredArgsConstructor;
 public class AuthTokenDto {
     @JsonProperty("auth-token")
     private final String authToken;
-    private final String email;
 }
