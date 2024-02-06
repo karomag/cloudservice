@@ -1,18 +1,18 @@
 package com.example.cloudservice.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 @Accessors(chain = true)
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
 public class User {
@@ -27,7 +27,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-   @ManyToMany(fetch = FetchType.LAZY)
+   @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = List.of();
 
 }

@@ -20,7 +20,7 @@ import static org.springframework.util.StringUtils.hasText;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private static final String HEADER_AUTHORIZATION = "Authorization";
+    private static final String HEADER_AUTHORIZATION = "Auth-Token";
     private static final String PREFIX_BEARER = "Bearer ";
 
     private final JwtGenerator tokenGenerator;

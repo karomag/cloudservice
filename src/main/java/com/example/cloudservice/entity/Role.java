@@ -1,15 +1,14 @@
 package com.example.cloudservice.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 @Entity
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @Accessors(chain = true)
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "roles")
 public class Role {
