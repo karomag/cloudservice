@@ -5,9 +5,3 @@ create table if not exists files (
     file bytea
 );
 
--- create table if not exists users (
---     id bigserial primary key,
---     username varchar(255),
---     password varchar(255),
---     authToken varchar(255)
--- )

@@ -1,6 +1,6 @@
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM openjdk:17-jdk-slim
 
-EXPOSE 8080
+EXPOSE 5050
 
 COPY target/cloudservice-0.0.1-SNAPSHOT.jar app.jar
 
