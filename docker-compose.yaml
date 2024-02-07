@@ -11,22 +11,22 @@ services:
       - database
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/postgres
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
   database:
     image: postgres:16-alpine
     restart: always
     environment:
       POSTGRES_DB: postgres
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
-  frontend:
-      image: "front"
-      build: "./front/"
-      container_name: "cloudservice-front"
-      ports:
-        - "8080:8080"
-      depends_on:
-        - "cloudservice"
+#  frontend:
+#      image: "front"
+#      build: "./front/"
+#      container_name: "cloudservice-front"
+#      ports:
+#        - "8080:8080"
+#      depends_on:
+#        - "cloudservice"
