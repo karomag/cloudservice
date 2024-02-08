@@ -11,7 +11,7 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
     ports:
-      - "5050:5050"
+      - "8080:8080"
     depends_on:
       - database
 
@@ -31,13 +31,3 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
-
-  frontend:
-      image: front
-      build: ./src/front/
-      container_name: front
-      ports:
-        - "8080:8080"
-      restart: always
-#      depends_on:
-#        - "cloudservice"
