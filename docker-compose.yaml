@@ -1,20 +1,29 @@
-version: "3"
+version: "3.9"
 
 services:
+
   cloudservice:
     container_name: cloudservice
     build:
       context: .
-    ports:
-      - "5050:5050"
-    depends_on:
-      - database
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - "5050:5050"
+    depends_on:
+      - database
+
   database:
     image: postgres:16-alpine
+    container_name: database
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     restart: always
     environment:
       POSTGRES_DB: postgres
@@ -22,11 +31,13 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
-#  frontend:
-#      image: "front"
-#      build: "./front/"
-#      container_name: "cloudservice-front"
-#      ports:
-#        - "8080:8080"
+
+  frontend:
+      image: front
+      build: ./src/front/
+      container_name: front
+      ports:
+        - "8080:8080"
+      restart: always
 #      depends_on:
 #        - "cloudservice"
