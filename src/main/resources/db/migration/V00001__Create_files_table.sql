@@ -4,4 +4,3 @@ create table if not exists files (
     size bigserial,
     file bytea
 );
-
