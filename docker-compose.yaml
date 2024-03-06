@@ -2,6 +2,13 @@ version: "3.9"
 
 services:
 
+  front:
+    container_name: front
+    build:
+      context: src/front/.
+    ports:
+      - "8081:8080"
+
   cloudservice:
     container_name: cloudservice
     build:
@@ -11,7 +18,7 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
     ports:
-      - "5050:5050"
+      - "8080:8080"
     depends_on:
       - database
 

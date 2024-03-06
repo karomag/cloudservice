@@ -11,7 +11,7 @@ RUN git sparse-checkout add $GIT_REPO_SUBDIR
 WORKDIR /src/git-repo/$GIT_REPO_SUBDIR
 RUN npm install
 
-ENV VUE_APP_BASE_URL=http://localhost:5050
+ENV VUE_APP_BASE_URL=http://localhost:8080
 RUN npm run build
 
 CMD ["npm",  "run", "serve"]
